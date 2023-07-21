@@ -29,13 +29,3 @@ function bissection_search( f , a , b , xtol = 1e-10 , maxit = 1_000)
     return xi( a , b )
 
 end
-
-f(x) =2*x^2 - 2*x + 8
-
-a = 40
-b = 90
-xtol = 0.3
-iter = number_iteration( a , b )
-
-x  = bissection_search(f , a  , b ,  xtol , iter)
-

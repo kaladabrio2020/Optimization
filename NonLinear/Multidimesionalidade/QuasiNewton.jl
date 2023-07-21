@@ -1,13 +1,13 @@
 using Plots
 using ForwardDiff
 using LinearAlgebra
-include("Plot_Uni_Pluri//0_One_Dimensional.jl")
-include("Plot_Uni_Pluri//1_Graphics.jl")
+include("Plot_Uni_Pluri//OneDimensional.jl")
+include("Plot_Uni_Pluri//Graphics1.jl")
 
 
-function Method_quasi_Newton( f , x  , ftol = 1e-8 , gtol = 1e-8 , maxit = 1_000)
+function MethodQuasiNewton( f , x  , ftol = 1e-8 , gtol = 1e-8 , maxit = 1_000)
     xi = NaN64
-    ponto  = Vector{Float64}[x] 
+    pontos = Vector{Float64}[x] 
     number = 1
     h(k) = ForwardDiff.hessian( f , k )
     g(k) = reduce(hcat,ForwardDiff.gradient( f , k ))
@@ -24,7 +24,8 @@ function Method_quasi_Newton( f , x  , ftol = 1e-8 , gtol = 1e-8 , maxit = 1_000
         
         xi  = x + alpha * d
         #xi  = round.(xi,5)
-        push!(pontos,xi)
+      
+        push!(pontos,vec(xi))
         Dxi =  alpha * d'
         
 
@@ -39,19 +40,18 @@ function Method_quasi_Newton( f , x  , ftol = 1e-8 , gtol = 1e-8 , maxit = 1_000
         p2 = (vec(z1)./vec(z2)) 
 
         Hxi = H .+ ( p1 - p2 )
-        print(Hxi)
 
         H = Hxi ; x = xi
 
         if ( number == maxit ) break end
         number += 1
+
+        if     ( norm(vec(g(x))) == 0 )                  break 
+        elseif ( f(x) - f(xi) <= ftol)                   break
+        end
     end
+    
+    if (length(x)==2) Graph( f , pontos , x ) end
 
     return f(xi),xi,number,pontos
 end
-
-f(x) = 6*x[1]^2 + 2*x[2]^2 
-p = [3,3]
-fx , xi , iter , pontos = Method_quasi_Newton(f,p,0,0,3)
-
-if (length(p)==2) Graph(f,pontos,p) end

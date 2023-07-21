@@ -1,6 +1,7 @@
 using Plots
 
 function Graph( f , pontos , inicio )
+
     Plots.GRBackend()
     gr( size=( 800,600 ) )
         
@@ -19,11 +20,11 @@ function Graph( f , pontos , inicio )
     x = y = range( a , stop = b , length = 50 )
     
     
-    contourf( x , y , ( x , y )-> f([x;y]), leg=false , c =:turbid )
+    p = contourf( x , y , ( x , y )-> f([x;y]), leg=false , c =:turbid )
         
     plot!( lx , ly , c=:red  )
     scatter!( lx , ly , markersize = 4 , markercolor=:white )
         
     annotate!( lx[length(lx)], ly[length(ly)] , text( texto ,:right , :green , 9 ) )
-    
+    display(p)
 end

@@ -43,10 +43,6 @@ function Method_Fibonacci( f , a , b , xtol = 0.3 , maxit = 1_000 )
             
         N -= 1; numero += 1  
     end
-
     return x1, x2, f(x1), f(x2)  
-
 end
 
-f(x)=x^2+3*x+2
-print(Method_Fibonacci(f,-2,2,1e-8,100))

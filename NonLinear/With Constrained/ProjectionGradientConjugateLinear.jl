@@ -8,7 +8,7 @@ function Projection_GradientConjugate(f , x , A , b , ftol = 1e-8 , xtol = 1e-8 
     pontos = Vector{Float64}[x]
     
     g(k) = reduce(hcat,ForwardDiff.gradient( f , k )) 
-    H(k)  = ForwardDiff.hessian( f , k )
+    H(k) = ForwardDiff.hessian( f , k )
     
 
     solve = A' * ((A*A')\A)

@@ -39,24 +39,13 @@ function GradientProjection( f , x , A , b  , ftol=1e-5 , gtol=1e-5 ,maxit=1_000
         x = xi
         
     end
+    if (length(p)== 2)  Graph(f , pontos , A , b ) end
+
     return  f(xi) , xi , pontos ,number
-    
 end
 
 
 
 
 
-# Z
-f(x) = x[1]^2 + 4*x[2]^2 - 8*x[1] - 16*x[2]
 
-p = [5.0,0.0]
-A = [3 -2;3 2]
-b = [6;15]
-
-fx , x , pontos ,iter = GradientProjection(f , p , A , b )
-
-
-if (length(p)== 2) 
-    Graph(f , pontos , A , b )  
-end

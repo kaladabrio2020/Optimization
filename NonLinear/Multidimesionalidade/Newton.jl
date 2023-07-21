@@ -1,7 +1,7 @@
 using Plots
 using ForwardDiff
 using LinearAlgebra
-include("Plot_Uni_Pluri//1_Graphics.jl")
+include("Plot_Uni_Pluri//Graphics1.jl")
 
 function method_newton( f , x , xtol = 1e-8 , ftol = 1e-8 , maxit = 1_000 )
     xi = NaN64
@@ -28,17 +28,7 @@ function method_newton( f , x , xtol = 1e-8 , ftol = 1e-8 , maxit = 1_000 )
         number += 1 ; x = xi
     
     end
-    return xi , pontos , number
+    if (length(x) == 2 ) Graph( f , pontos , x ) end
+
+    return f(xi), xi , pontos , number
 end
-
-
-
-#____________________________________________
-f(x) = x[1]^2 + x[2]^2 
-p    = [2,5]
-
-x , pontos , number = method_newton( f , p )
-println(x , " ",number)
-
-
-if (length(p) == 2 ) Graph( f , pontos , p ) end
